@@ -1,4 +1,5 @@
 # CDCL
+**This repo is set up based on https://github.com/kevinlin311tw/CDCL-human-part-segmentation.**
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/cross-domain-complementary-learning-with/human-part-segmentation-on-pascal-person-part)](https://paperswithcode.com/sota/human-part-segmentation-on-pascal-person-part?p=cross-domain-complementary-learning-with)
 
