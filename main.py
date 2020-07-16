@@ -11,7 +11,7 @@ from human_seg.human_seg_gt import human_seg_combine_argmax
 # parse arguments
 parser = argparse.ArgumentParser(description='loading eval params')
 parser.add_argument('--gpus', metavar='N', type=int, default=1)
-parser.add_argument('--model', type=str, default='./model_simulated_RGB_mgpu_scaling_append.0071.h5',
+parser.add_argument('--model', type=str, default='./weights/model_simulated_RGB_mgpu_scaling_append.0071.h5',
                     help='path to the weights file')
 parser.add_argument('--input_folder', type=str, default='./input', help='path to the folder with test images')
 parser.add_argument('--output_folder', type=str, default='./output', help='path to the output folder')
