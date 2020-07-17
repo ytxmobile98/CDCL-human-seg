@@ -281,10 +281,11 @@ if __name__ == '__main__':
         print(filename)
 
         base_filename = os.path.basename(filename)
+        file_category = os.path.basename(os.path.dirname(filename))
 
         # write sk
         canvas, seg = process(filename, params, model_params)
-        cv2.imwrite(os.path.join(args.output_folder, '/sk_%s' % base_filename), canvas)
+        cv2.imwrite(os.path.join(args.output_folder, file_category, '/sk_%s' % base_filename), canvas)
 
         seg_argmax = np.argmax(seg, axis=-1)
         seg_max = np.max(seg, axis=-1)
@@ -293,4 +294,4 @@ if __name__ == '__main__':
 
         # write seg
         seg_canvas = human_seg_combine_argmax(seg_argmax)
-        cv2.imwrite(os.path.join(args.output_folder, 'seg_%s' % base_filename), seg_canvas)
+        cv2.imwrite(os.path.join(args.output_folder, file_category, '/seg_%s' % base_filename), seg_canvas)
