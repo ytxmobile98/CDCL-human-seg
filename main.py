@@ -1,4 +1,5 @@
 import os
+import glob
 import argparse
 
 import cv2
@@ -272,20 +273,24 @@ if __name__ == '__main__':
     params['scale_search'] = scale_list
 
     # generate image with body parts
-    for filename in os.listdir(args.input_folder):
-        filename = os.path.basename(filename)
-        args.input_folder = os.path.abspath(args.input_folder)
-        full_filename = os.path.join(args.input_folder, filename)
+    image_files = glob.glob(os.path.join(args.input_folder, '**'), recursive=True)
+    image_exts = (".png", ".jpg", ".bmp")
+    image_files = [os.path.abspath(file) for file in image_files if (os.path.splitext(file)[1] in image_exts)]
 
-        if os.path.splitext(filename)[1] in (".png", ".jpg", ".bmp"):
-            print(full_filename)
-            canvas, seg = process(full_filename, params, model_params)
-            cv2.imwrite(os.path.join(args.output_folder, '/sk_%s' % filename), canvas)
+    for filename in image_files:
+        print(filename)
 
-            seg_argmax = np.argmax(seg, axis=-1)
-            seg_max = np.max(seg, axis=-1)
-            seg_max_thres = (seg_max > 0.1).astype(np.uint8)
-            seg_argmax *= seg_max_thres
+        base_filename = os.path.basename(filename)
 
-            seg_canvas = human_seg_combine_argmax(seg_argmax)
-            cv2.imwrite(os.path.join(args.output_folder, 'seg_%s' % filename), seg_canvas)
+        # write sk
+        canvas, seg = process(filename, params, model_params)
+        cv2.imwrite(os.path.join(args.output_folder, '/sk_%s' % base_filename), canvas)
+
+        seg_argmax = np.argmax(seg, axis=-1)
+        seg_max = np.max(seg, axis=-1)
+        seg_max_thres = (seg_max > 0.1).astype(np.uint8)
+        seg_argmax *= seg_max_thres
+
+        # write seg
+        seg_canvas = human_seg_combine_argmax(seg_argmax)
+        cv2.imwrite(os.path.join(args.output_folder, 'seg_%s' % base_filename), seg_canvas)
