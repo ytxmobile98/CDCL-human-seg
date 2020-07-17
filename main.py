@@ -277,7 +277,7 @@ if __name__ == '__main__':
     image_exts = (".png", ".jpg", ".bmp")
     image_files = [os.path.abspath(file) for file in image_files if (os.path.splitext(file)[1] in image_exts)]
 
-    for (index, filename) in enumerate(image_files):
+    for (index, filename) in enumerate(image_files, start=1):
         print()
         print("[%d / %d] Processing: %s" % (index, len(image_files), filename))
 
