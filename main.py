@@ -277,9 +277,9 @@ if __name__ == '__main__':
     image_exts = (".png", ".jpg", ".bmp")
     image_files = [os.path.abspath(file) for file in image_files if (os.path.splitext(file)[1] in image_exts)]
 
-    for filename in image_files:
+    for (index, filename) in enumerate(image_files):
         print()
-        print("Processing: %s" % filename)
+        print("[%d / %d] Processing: %s" % (index, len(image_files), filename))
 
         base_filename = os.path.basename(filename)
         file_category = os.path.basename(os.path.dirname(filename))
