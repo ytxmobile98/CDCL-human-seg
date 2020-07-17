@@ -278,7 +278,8 @@ if __name__ == '__main__':
     image_files = [os.path.abspath(file) for file in image_files if (os.path.splitext(file)[1] in image_exts)]
 
     for filename in image_files:
-        print(filename)
+        print()
+        print("Processing: %s" % filename)
 
         base_filename = os.path.basename(filename)
         file_category = os.path.basename(os.path.dirname(filename))
@@ -287,6 +288,7 @@ if __name__ == '__main__':
         # write sk
         canvas, seg = process(filename, params, model_params)
         sk_outfile = os.path.join(output_folder, file_category, 'sk_%s' % base_filename)
+        os.makedirs(os.path.dirname(sk_outfile), exist_ok=True)
         cv2.imwrite(sk_outfile, canvas)
         print("Written to: %s" % sk_outfile)
 
@@ -298,5 +300,6 @@ if __name__ == '__main__':
         # write seg
         seg_canvas = human_seg_combine_argmax(seg_argmax)
         seg_outfile = os.path.join(output_folder, file_category, 'seg_%s' % base_filename)
+        os.makedirs(os.path.dirname(sk_outfile), exist_ok=True)
         cv2.imwrite(seg_outfile, seg_canvas)
         print("Written to: %s " % seg_outfile)
