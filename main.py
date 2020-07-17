@@ -273,10 +273,12 @@ if __name__ == '__main__':
 
     # generate image with body parts
     for filename in os.listdir(args.input_folder):
-        if filename.endswith(".png") or filename.endswith(".jpg"):
-            print(args.input_folder + '/' + filename)
-            canvas, seg = process(args.input_folder + '/' + filename, params, model_params)
-            cv2.imwrite(args.output_folder + '/sk_' + filename, canvas)
+        filename = os.path.basename(filename)
+        if os.path.splitext(filename)[1] in (".png", ".jpg", ".bmp"):
+            full_filename = os.path.join(args.input_folder, filename)
+            print(full_filename)
+            canvas, seg = process(full_filename, params, model_params)
+            cv2.imwrite(os.path.join(args.output_folder, '/sk_%s' % filename), canvas)
 
             seg_argmax = np.argmax(seg, axis=-1)
             seg_max = np.max(seg, axis=-1)
@@ -284,5 +286,5 @@ if __name__ == '__main__':
             seg_argmax *= seg_max_thres
 
             seg_canvas = human_seg_combine_argmax(seg_argmax)
-            filename = '%s/%s.jpg' % (args.output_folder, 'seg_' + filename)
+            filename = os.path.join(args.output_folder, 'seg_%s' % filename)
             cv2.imwrite(filename, seg_canvas)
