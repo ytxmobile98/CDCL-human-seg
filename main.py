@@ -282,10 +282,13 @@ if __name__ == '__main__':
 
         base_filename = os.path.basename(filename)
         file_category = os.path.basename(os.path.dirname(filename))
+        output_folder = os.path.abspath(args.output_folder)
 
         # write sk
         canvas, seg = process(filename, params, model_params)
-        cv2.imwrite(os.path.join(args.output_folder, file_category, '/sk_%s' % base_filename), canvas)
+        sk_outfile = os.path.join(output_folder, file_category, '/sk_%s' % base_filename)
+        cv2.imwrite(sk_outfile, canvas)
+        print("Written to: %s" % sk_outfile)
 
         seg_argmax = np.argmax(seg, axis=-1)
         seg_max = np.max(seg, axis=-1)
@@ -294,4 +297,6 @@ if __name__ == '__main__':
 
         # write seg
         seg_canvas = human_seg_combine_argmax(seg_argmax)
-        cv2.imwrite(os.path.join(args.output_folder, file_category, '/seg_%s' % base_filename), seg_canvas)
+        seg_outfile = os.path.join(output_folder, file_category, '/seg_%s' % base_filename)
+        cv2.imwrite(seg_outfile, seg_canvas)
+        print("Written to: %s " % seg_outfile)
