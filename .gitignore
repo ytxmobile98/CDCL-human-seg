@@ -1,5 +1,6 @@
 # macOS
 __MACOSX/
+.DS_Store
 
 # Model files
 *.h5
