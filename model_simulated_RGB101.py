@@ -25,6 +25,7 @@ from keras.layers import add
 
 import mylayers
 import code
+import keras.backend as K
 
 stages = 1
 np_branch1 = 38
