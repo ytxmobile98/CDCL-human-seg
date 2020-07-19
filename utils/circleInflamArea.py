@@ -31,7 +31,7 @@ def circleInflamArea(input_image_path, output_image_path, lower_inflam_temp,
 
     grey_threshold is the threshold of grey channel value used to filter
     potential noise of the inflammation area selection
-    Exmaple: 50
+    Example: 50
 
     area_threshold is the threshold of pixel number required for an area
     to be considered as inflammation area
